@@ -1,0 +1,20 @@
+{
+  "name": "terrasage",
+  "version": "1.0.0",
+  "description": "Urban Climate Intelligence - Cooler Cities. Smarter Decisions.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve -p 3000 .",
+    "dev": "npx -y serve -p 3000 .",
+    "streamlit": "streamlit run app.py"
+  },
+  "keywords": [
+    "urban-heat-island",
+    "climate-intelligence",
+    "sustainability",
+    "microclimate",
+    "streamlit"
+  ],
+  "author": "TerraSage",
+  "license": "MIT"
+}

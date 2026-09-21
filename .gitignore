@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.streamlit/
+node_modules/
+.DS_Store
+*.log

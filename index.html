@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerraSage — Urban Heat Risk &amp; Cooling Intelligence</title>
+  <meta name="description" content="TerraSage empowers urban decision-makers to map heat risk, identify priority areas, and simulate targeted cooling interventions.">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <div class="logo">
+        <span class="logo-leaf"></span>
+        Terra<span>Sage</span>
+      </div>
+      <div class="nav-links">
+        <a href="#hero" class="active">Home</a>
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#features">Features</a>
+        <a href="#product">Live Simulator</a>
+        <a href="#how">How It Works</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn open-demo-modal" id="nav-demo-btn">Request a Demo</button>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MOBILE MENU DRAWER -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <a href="#hero">Home</a>
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#features">Features</a>
+    <a href="#product">Live Simulator</a>
+    <a href="#how">How It Works</a>
+    <a href="#impact">Impact</a>
+    <a href="#contact">Contact</a>
+    <button class="btn open-demo-modal" style="width:100%; margin-top:10px;">Request a Demo</button>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="eyebrow">🌿 Urban Climate Intelligence</span>
+        <h1>Cooler cities.<br><span class="accent">Smarter decisions.</span></h1>
+        <p>TerraSage helps municipal leaders, urban planners, and sustainability teams identify heat hotspots, quantify microclimate impacts, and budget targeted cooling interventions before extreme heat drives up municipal costs.</p>
+        <div class="hero-cta">
+          <a href="#product" class="btn">Explore Interactive Platform</a>
+          <a href="#how" class="btn btn-outline">See how it works ↓</a>
+        </div>
+      </div>
+
+      <!-- HERO INTERACTIVE DASHBOARD PREVIEW -->
+      <div class="dashboard-visual">
+        <div class="map-panel">
+          <div class="map-header">
+            <span class="map-label">
+              <span class="pulse-dot"></span> Urban Heat Risk Surface (Click any zone)
+            </span>
+            <span class="map-hint" id="map-hint-text">Select a sector to inspect</span>
+          </div>
+          <div class="map-canvas-container">
+            <svg viewBox="0 0 500 320" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+
+              <!-- Grid Background Lines -->
+              <g stroke="rgba(30,60,42,0.4)" stroke-width="0.7">
+                <line x1="20" y1="40" x2="480" y2="40" />
+                <line x1="20" y1="100" x2="480" y2="100" />
+                <line x1="20" y1="160" x2="480" y2="160" />
+                <line x1="20" y1="220" x2="480" y2="220" />
+                <line x1="20" y1="280" x2="480" y2="280" />
+                <line x1="80" y1="20" x2="80" y2="300" />
+                <line x1="180" y1="20" x2="180" y2="300" />
+                <line x1="280" y1="20" x2="280" y2="300" />
+                <line x1="380" y1="20" x2="380" y2="300" />
+              </g>
+
+              <!-- Zone A (Downtown Hotspot) -->
+              <rect class="map-zone selected" data-zone="zone-a" x="35" y="45" width="115" height="95" rx="12" fill="#ff5e57" opacity="0.65"/>
+              <text class="zone-label-text" x="55" y="100">Zone A</text>
+
+              <!-- Zone B (Industrial Sector) -->
+              <rect class="map-zone" data-zone="zone-b" x="175" y="55" width="135" height="105" rx="12" fill="#ff9d6c" opacity="0.6"/>
+              <text class="zone-label-text" x="220" y="115">Zone B</text>
+
+              <!-- Zone C (Residential Greenbelt) -->
+              <rect class="map-zone" data-zone="zone-c" x="335" y="40" width="125" height="120" rx="12" fill="#8fe3b8" opacity="0.5"/>
+              <text class="zone-label-text" x="380" y="105">Zone C</text>
+
+              <!-- Zone D (Transit Corridor) -->
+              <rect class="map-zone" data-zone="zone-d" x="70" y="175" width="150" height="95" rx="12" fill="#ff9d6c" opacity="0.55"/>
+              <text class="zone-label-text" x="120" y="230">Zone D</text>
+
+              <!-- Zone E (Riverfront Park) -->
+              <rect class="map-zone" data-zone="zone-e" x="250" y="185" width="190" height="90" rx="12" fill="#b6f24c" opacity="0.45"/>
+              <text class="zone-label-text" x="325" y="235">Zone E</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- INDICATORS PANEL -->
+        <div class="indicator-stack">
+          <div class="indicator">
+            <div class="label">Surface Heat Exposure</div>
+            <div class="value high" id="hero-heat-val">Critical (41.5°C)</div>
+            <div class="note" id="hero-zone-note">Active: Zone A · Canopy: 8.4%</div>
+          </div>
+          <div class="indicator">
+            <div class="label">Priority Action Tier</div>
+            <div class="value high" id="hero-priority-val">Priority 1 (Urgent)</div>
+            <div class="note">High heat island concentration</div>
+          </div>
+          <div class="indicator">
+            <div class="label">Estimated Intervention ROI</div>
+            <div class="value" id="hero-cost-val">High ROI ($285k)</div>
+            <div class="note">Payback period ~ 3.8 years in energy offsets</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION -->
+  <section id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The Challenge</span>
+        <h2>Heat is an urban emergency — and a municipal budget crisis.</h2>
+        <p>Cities endure escalating heat waves, spiking peak energy grid stress, and worsening public health disparities. Planners lack a unified intelligence layer to connect satellite thermal data with actionable intervention economics.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="icon">🌡️</div>
+          <h3>Rising Urban Heat</h3>
+          <p>Impervious concrete and dark asphalt absorb thermal radiation, creating suffocating microclimates up to 10°C hotter than surrounding rural areas.</p>
+        </div>
+        <div class="card">
+          <div class="icon">⚡</div>
+          <h3>Surging Energy Demands</h3>
+          <p>High temperatures overload city power grids and skyrocket municipal and commercial HVAC cooling operational expenditures.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏙️</div>
+          <h3>Unequal Heat Vulnerability</h3>
+          <p>Disadvantaged neighborhoods with low tree canopy density bear severe heat burdens, leading to disproportionate health impacts.</p>
+        </div>
+        <div class="card">
+          <div class="icon">💰</div>
+          <h3>Constrained Capital Budgets</h3>
+          <p>Cities cannot afford indiscriminate solutions. Every dollar allocated must target the exact zones with highest cooling return-on-investment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION SECTION -->
+  <section id="solution">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The Solution</span>
+        <h2>From raw satellite data to street-level decisions.</h2>
+        <p>TerraSage translates multi-spectral satellite thermal imagery, tree canopy metrics, and demographic vulnerability indices into clear, actionable cooling roadmaps.</p>
+      </div>
+      <div class="solution-grid">
+        <div class="solution-card">
+          <div class="icon">🗺️</div>
+          <h3>Microclimate Heat Mapping</h3>
+          <p>High-resolution thermal surface maps pinpoint exact hot spots and prioritize micro-neighborhoods requiring immediate mitigation.</p>
+        </div>
+        <div class="solution-card">
+          <div class="icon">🌳</div>
+          <h3>Intervention Optimization</h3>
+          <p>Simulate the microclimate cooling potential of shade sails, cool pavements, green corridors, and urban tree canopies before construction.</p>
+        </div>
+        <div class="solution-card">
+          <div class="icon">📊</div>
+          <h3>Budget &amp; ROI Analytics</h3>
+          <p>Model financial expenditures alongside anticipated energy reductions, healthcare savings, and municipal climate goals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Platform Capabilities</span>
+        <h2>Designed for evidence-based urban governance.</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="card">
+          <div class="icon">📍</div>
+          <h3>Neighborhood Prioritization</h3>
+          <p>Rank municipal sectors by heat risk indices, vulnerable population density, and existing tree canopy deficit.</p>
+        </div>
+        <div class="card">
+          <div class="icon">📈</div>
+          <h3>Scenario Comparison</h3>
+          <p>Run side-by-side simulations of diverse cooling interventions to choose the highest-impact strategy for your budget.</p>
+        </div>
+        <div class="card">
+          <div class="icon">💡</div>
+          <h3>Decision-Ready Briefs</h3>
+          <p>Generate one-click PDF executive summaries for city council meetings, capital budget approvals, and grant proposals.</p>
+        </div>
+        <div class="card">
+          <div class="icon">💰</div>
+          <h3>Cost-Benefit Forecasting</h3>
+          <p>Forecast avoided peak energy penalties, stormwater management benefits, and carbon mitigation offsets.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏛️</div>
+          <h3>Multi-Agency Collaboration</h3>
+          <p>Unify parks &amp; recreation, public works, sustainability directors, and city engineers onto one shared GIS platform.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌱</div>
+          <h3>Resilience Benchmarking</h3>
+          <p>Track multi-year progress toward municipal net-zero and climate adaptation targets with automated satellite updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE PLATFORM SIMULATOR -->
+  <section id="product">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Interactive Simulation</span>
+        <h2>Explore TerraSage Intelligence Engine</h2>
+        <p>Select any urban zone below and toggle candidate cooling interventions to observe projected temperature drops, implementation costs, and annual energy savings.</p>
+      </div>
+
+      <div class="product-mock">
+        <!-- LEFT: SECTOR SELECTOR & MAP -->
+        <div class="left">
+          <h4>Select Urban Sector</h4>
+          <div class="zone-selector-bar">
+            <button class="zone-btn active" data-zone="zone-a">Zone A (Downtown)</button>
+            <button class="zone-btn" data-zone="zone-b">Zone B (Industrial)</button>
+            <button class="zone-btn" data-zone="zone-c">Zone C (Greenbelt)</button>
+            <button class="zone-btn" data-zone="zone-d">Zone D (Transit Corridor)</button>
+            <button class="zone-btn" data-zone="zone-e">Zone E (Riverfront)</button>
+          </div>
+
+          <div class="map-stage">
+            <svg viewBox="0 0 450 260" style="width:100%; height:100%;">
+              <!-- Interactive Zones synced with state -->
+              <rect class="map-zone selected" data-zone="zone-a" x="30" y="30" width="100" height="90" rx="10" fill="#ff5e57" opacity="0.75"/>
+              <text class="zone-label-text" x="50" y="80">Zone A</text>
+
+              <rect class="map-zone" data-zone="zone-b" x="160" y="40" width="120" height="90" rx="10" fill="#ff9d6c" opacity="0.65"/>
+              <text class="zone-label-text" x="200" y="90">Zone B</text>
+
+              <rect class="map-zone" data-zone="zone-c" x="310" y="30" width="110" height="100" rx="10" fill="#8fe3b8" opacity="0.55"/>
+              <text class="zone-label-text" x="350" y="85">Zone C</text>
+
+              <rect class="map-zone" data-zone="zone-d" x="60" y="145" width="130" height="85" rx="10" fill="#ff9d6c" opacity="0.6"/>
+              <text class="zone-label-text" x="105" y="195">Zone D</text>
+
+              <rect class="map-zone" data-zone="zone-e" x="220" y="150" width="180" height="80" rx="10" fill="#b6f24c" opacity="0.5"/>
+              <text class="zone-label-text" x="290" y="195">Zone E</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- RIGHT: INTERVENTIONS & METRICS -->
+        <div class="right">
+          <div>
+            <h4>Target Assessment</h4>
+            <div class="priority-badge" id="sim-priority-badge">Zone A · Critical Heat Exposure</div>
+
+            <h4>Select Interventions to Model</h4>
+            <ul class="interventions-list" id="sim-interventions-list">
+              <!-- Dynamically populated by script.js -->
+            </ul>
+          </div>
+
+          <!-- DYNAMIC COST & COOLING BOX -->
+          <div class="cost-box">
+            <div style="font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em;">Modeled Intervention Cost</div>
+            <div class="amount" id="sim-total-cost">$250,000</div>
+            
+            <div class="cost-metrics">
+              <div class="metric-item">
+                <div class="sub-label">Projected Temp Drop</div>
+                <div class="sub-val" id="sim-cooling-drop">-4.1°C</div>
+              </div>
+              <div class="metric-item">
+                <div class="sub-label">Est. Energy Savings</div>
+                <div class="sub-val" id="sim-annual-savings">$67,000/yr</div>
+              </div>
+            </div>
+            <div class="caption">Live simulation based on TerraSage urban microclimate heat transfer algorithms.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Methodology</span>
+        <h2>From earth observation to climate resilience.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">01</div>
+          <h3>Aggregate</h3>
+          <p>Ingest multi-spectral satellite thermal data, Landsat surface temperatures, NDVI vegetation coverage, and LiDAR building heights.</p>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <h3>Identify</h3>
+          <p>Run spatial microclimate models to detect localized heat islands, vulnerable demographics, and critical infrastructure hotspots.</p>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <h3>Model &amp; Compare</h3>
+          <p>Simulate diverse nature-based and engineered cooling scenarios with projected temperature drop and cost-benefit ratios.</p>
+        </div>
+        <div class="step">
+          <div class="num">04</div>
+          <h3>Deploy &amp; Track</h3>
+          <p>Equip engineering and finance teams with vetted project specs and monitor real-world cooling efficacy year-over-year.</p>
+        </div>
+      </div>
+      <div class="flow-row">
+        <span class="node">Raw Satellite Feeds</span>
+        <span class="flow-arrow">→</span>
+        <span class="node">Thermal Heat Risk Engine</span>
+        <span class="flow-arrow">→</span>
+        <span class="node">Cooling Intervention Modeling</span>
+        <span class="flow-arrow">→</span>
+        <span class="node">Budgeted Action Plan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT SECTION -->
+  <section id="impact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Proven Value</span>
+        <h2>Why forward-thinking cities choose TerraSage.</h2>
+      </div>
+      <div class="impact-grid">
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>Precision Allocation</h3>
+          <p>Stop guessing tree planting locations. Channel municipal capital where every degree of cooling produces maximum societal benefit.</p>
+        </div>
+        <div class="card">
+          <div class="icon">⚡</div>
+          <h3>Peak Load Mitigation</h3>
+          <p>Lower ambient city temperatures to slash municipal grid strain, brownout hazards, and excessive AC energy costs.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏥</div>
+          <h3>Public Health Equity</h3>
+          <p>Protect vulnerable elderly and pediatric populations from heat-stroke emergencies and cardiovascular stress during extreme heatwaves.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌍</div>
+          <h3>Climate Readiness</h3>
+          <p>Turn climate vulnerability audits into bankable infrastructure projects eligible for federal green resilience grants.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT IS FOR -->
+  <section id="users">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Stakeholders</span>
+        <h2>Built for the architects of tomorrow's resilient cities.</h2>
+      </div>
+      <div class="users-grid">
+        <div class="user-card">
+          <h3>Municipal Governments</h3>
+          <p>Formulate comprehensive heat adaptation plans backed by rigorous microclimate datasets and clear budget projections.</p>
+        </div>
+        <div class="user-card">
+          <h3>Urban Planners &amp; Designers</h3>
+          <p>Incorporate shade corridors, albedo materials, and permeable green infrastructure into master zoning plans.</p>
+        </div>
+        <div class="user-card">
+          <h3>Public Works &amp; Infrastructure</h3>
+          <p>Evaluate cool pavement resurfacing schedules and prioritize street tree planting campaigns with engineering precision.</p>
+        </div>
+        <div class="user-card">
+          <h3>Chief Resilience Officers</h3>
+          <p>Measure, report, and demonstrate verified progress toward municipal carbon reduction and thermal safety goals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & CALL TO ACTION -->
+  <section id="contact">
+    <div class="cta-section">
+      <span class="eyebrow">Collaborate With TerraSage</span>
+      <h2>Turn rising temperatures into actionable cooling plans.</h2>
+      <p>Ready to deploy high-resolution urban heat risk intelligence for your municipality, regional agency, or sustainability project?</p>
+      <div class="cta-buttons">
+        <button class="btn open-demo-modal">Schedule an Interactive Demo</button>
+        <a href="mailto:terrasage.demo@gmail.com" class="btn btn-outline">Email Our Team</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO REQUEST MODAL -->
+  <div class="modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <button class="modal-close" id="close-modal" aria-label="Close modal">✕</button>
+      <h3 id="modal-title">Request a TerraSage Demo</h3>
+      <p>Discover how TerraSage can model heat risk and cooling ROI for your municipality or organization.</p>
+      
+      <form id="demo-form">
+        <div class="form-group">
+          <label for="input-name">Full Name</label>
+          <input type="text" id="input-name" class="form-input" placeholder="e.g. Dr. Jane Mitchell" required>
+        </div>
+        <div class="form-group">
+          <label for="input-email">Work Email</label>
+          <input type="email" id="input-email" class="form-input" placeholder="jane.mitchell@city.gov" required>
+        </div>
+        <div class="form-group">
+          <label for="input-org">Municipality / Organization</label>
+          <input type="text" id="input-org" class="form-input" placeholder="e.g. Austin Public Works" required>
+        </div>
+        <div class="form-group">
+          <label for="input-role">Primary Area of Focus</label>
+          <select id="input-role" class="form-select">
+            <option value="planning">Urban Planning &amp; Zoning</option>
+            <option value="sustainability">Sustainability &amp; Resilience</option>
+            <option value="public_works">Public Works &amp; Infrastructure</option>
+            <option value="academic">Academic / Environmental Research</option>
+          </select>
+        </div>
+        <button type="submit" class="btn" style="width:100%; margin-top:8px;">Submit Demo Request</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div>© 2026 TerraSage Technologies Inc. Urban climate intelligence for resilient cities.</div>
+      <div>Direct Inquiries: <a href="mailto:terrasage.demo@gmail.com">terrasage.demo@gmail.com</a></div>
+    </div>
+  </footer>
+
+</body>
+</html>
